@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Branding Colors */
+  --bg-paper: #E5E1DC;
+  --bg-cream: #EDE9E3;
+  --bg-slate: #D4D0CB;
+  --bg-charcoal: #2A2A2A;
+
+  /* UI Colors */
+  --ui-bg: #1A1A1E;
+  --ui-surface: #242428;
+  --ui-surface-hover: #2E2E34;
+  --ui-border: #3A3A42;
+  --ui-text: #F5F5F5;
+  --ui-text-muted: #9A9AA0;
+
+  /* Accents */
+  --accent-primary: #6B5CE7;
+  --accent-primary-hover: #7D70F0;
+  --accent-danger: #E74C3C;
+  --accent-success: #2ECC71;
+
+  /* Typography */
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-ui: 'Inter', -apple-system, sans-serif;
+
+  /* Slide Defaults */
+  --slide-size: 500px;
+  --slide-text: #1A1A1A;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ui-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--ui-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ui-text-muted);
+}
+
+/* Utility Classes */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+  font-family: var(--font-ui);
+}
+
+.btn-primary {
+  background: var(--accent-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--accent-primary-hover);
+}
+
+.btn-secondary {
+  background: var(--ui-surface);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--ui-text-muted);
+}
+
+.input-field {
+  background: var(--ui-bg);
+  border: 1px solid var(--ui-border);
+  color: var(--ui-text);
+  padding: 8px 12px;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+}

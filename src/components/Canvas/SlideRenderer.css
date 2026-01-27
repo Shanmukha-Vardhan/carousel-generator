@@ -1,0 +1,213 @@
+/* SlideRenderer.css */
+
+.slide-canvas {
+    width: var(--slide-size);
+    height: var(--slide-size);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s;
+
+    /* Texture Overlay */
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"),
+        linear-gradient(135deg, var(--bg-curr) 0%, var(--bg-mix, transparent) 100%);
+    background-blend-mode: overlay;
+}
+
+/* Background Variants */
+.bg-paper {
+    --bg-curr: var(--bg-paper);
+    --bg-mix: var(--bg-slate);
+}
+
+.bg-cream {
+    --bg-curr: var(--bg-cream);
+    --bg-mix: var(--bg-paper);
+}
+
+.bg-slate {
+    --bg-curr: var(--bg-slate);
+    --bg-mix: #bbb;
+}
+
+.bg-charcoal {
+    --bg-curr: var(--bg-charcoal);
+    --bg-mix: #111;
+}
+
+.bg-charcoal * {
+    color: var(--ui-text) !important;
+    border-color: var(--ui-text) !important;
+    stroke: var(--ui-text) !important;
+}
+
+/* Content Base */
+.slide-content {
+    width: 100%;
+    height: 100%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    color: var(--slide-text);
+}
+
+/* Editables */
+.editable {
+    outline: none;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: border-color 0.2s;
+    cursor: text;
+    min-height: 1em;
+}
+
+.editable:hover {
+    border-color: rgba(107, 92, 231, 0.2);
+}
+
+.editable:focus {
+    border-color: var(--accent-primary);
+}
+
+.editable:empty::before {
+    content: 'Type here...';
+    opacity: 0.4;
+}
+
+/* COVER SLIDE */
+.slide-cover {
+    justify-content: space-between;
+}
+
+.cover-headline {
+    font-size: 2.8rem;
+    line-height: 1.0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    max-width: 95%;
+}
+
+.polaroid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: rotate(-1deg);
+}
+
+.polaroid-frame {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s;
+}
+
+.polaroid-frame:hover {
+    transform: scale(1.02) rotate(0deg);
+}
+
+.polaroid-img-area {
+    width: 200px;
+    height: 200px;
+    background: #eee;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.polaroid-meta {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    margin-top: 16px;
+    font-family: var(--font-display);
+}
+
+.cover-quote {
+    font-size: 1.25rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* CIRCLE SLIDE */
+.slide-circle {
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.circle-subtitle {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.circle-highlight-box {
+    position: relative;
+    display: inline-block;
+    margin: 30px 0;
+    align-self: flex-start;
+    padding: 20px 30px;
+}
+
+.circle-text {
+    font-size: 2rem;
+    line-height: 1.2;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+}
+
+.circle-svg {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    z-index: 1;
+}
+
+.circle-body {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: auto;
+}
+
+/* CONTENT SLIDE */
+.slide-content-layout {
+    gap: 20px;
+}
+
+.content-topic {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.content-definition {
+    font-size: 1.6rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.content-section {
+    margin-top: 20px;
+}
+
+.section-title {
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    color: inherit;
+    opacity: 0.8;
+}
+
+.section-body {
+    font-size: 1.3rem;
+    line-height: 1.3;
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Generator | Create Stunning Social Posts</title>
+    <meta name="description" content="Create professional carousel posts for social media with our easy-to-use generator. No design skills needed.">
+    
+    <!-- Google Fonts - Bebas Neue (exact match) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- JSZip for ZIP export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <!-- html2canvas for PNG export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">Carousel Studio</span>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-secondary" id="previewAllBtn">
+                    <span class="btn-icon">👁</span>
+                    Preview All
+                </button>
+                <button class="btn btn-primary" id="exportBtn">
+                    <span class="btn-icon">↓</span>
+                    Export
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Sidebar - Slide Navigator -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h3>Slides</h3>
+                    <span class="slide-count" id="slideCount">1/10</span>
+                </div>
+                
+                <div class="slides-list" id="slidesList">
+                    <!-- Slides will be dynamically added here -->
+                </div>
+                
+                <button class="add-slide-btn" id="addSlideBtn">
+                    <span>+</span>
+                    Add Slide
+                </button>
+                
+                <!-- Slide Type Selector Modal -->
+                <div class="slide-type-modal" id="slideTypeModal">
+                    <div class="modal-content">
+                        <h4>Choose Slide Type</h4>
+                        <div class="slide-types">
+                            <button class="slide-type-option" data-type="cover">
+                                <div class="type-preview cover-preview">
+                                    <div class="mini-title"></div>
+                                    <div class="mini-image"></div>
+                                    <div class="mini-text"></div>
+                                </div>
+                                <span>Cover</span>
+                            </button>
+                            <button class="slide-type-option" data-type="circle">
+                                <div class="type-preview circle-preview">
+                                    <div class="mini-subtitle"></div>
+                                    <div class="mini-circle"></div>
+                                    <div class="mini-body"></div>
+                                </div>
+                                <span>Circle Highlight</span>
+                            </button>
+                            <button class="slide-type-option" data-type="content">
+                                <div class="type-preview content-preview">
+                                    <div class="mini-heading"></div>
+                                    <div class="mini-lines"></div>
+                                    <div class="mini-lines"></div>
+                                </div>
+                                <span>Content</span>
+                            </button>
+                        </div>
+                        <button class="modal-close" id="closeModal">Cancel</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Editor Area -->
+            <section class="editor-area">
+                <!-- Controls Panel -->
+                <div class="controls-panel">
+                    <div class="control-group">
+                        <label>Slide Type</label>
+                        <select id="slideTypeSelect">
+                            <option value="cover">Cover Slide</option>
+                            <option value="circle">Circle Highlight</option>
+                            <option value="content">Content Slide</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group" id="imageUploadGroup">
+                        <label>Upload Image</label>
+                        <div class="image-upload-wrapper">
+                            <input type="file" id="imageUpload" accept="image/*">
+                            <button class="upload-btn">
+                                <span>📷</span>
+                                Choose Image
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Background</label>
+                        <div class="color-options">
+                            <button class="color-btn active" data-bg="paper" title="Paper"></button>
+                            <button class="color-btn" data-bg="cream" title="Cream"></button>
+                            <button class="color-btn" data-bg="slate" title="Slate"></button>
+                            <button class="color-btn" data-bg="charcoal" title="Charcoal"></button>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-danger" id="deleteSlideBtn">
+                        <span>🗑</span>
+                        Delete Slide
+                    </button>
+                </div>
+
+                <!-- Live Preview Canvas -->
+                <div class="preview-wrapper">
+                    <div class="preview-canvas" id="previewCanvas">
+                        <!-- Slide content will be rendered here -->
+                    </div>
+                    
+                    <!-- Carousel Navigation Dots -->
+                    <div class="carousel-nav" id="carouselNav">
+                        <!-- Dots will be dynamically added -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Export Modal -->
+        <div class="export-modal" id="exportModal">
+            <div class="export-modal-content">
+                <h3>Export Carousel</h3>
+                <p>Choose your export option:</p>
+                
+                <div class="export-options">
+                    <button class="export-option" id="exportPngBtn">
+                        <span class="export-icon">🖼</span>
+                        <span class="export-label">Download Current Slide</span>
+                        <span class="export-format">PNG</span>
+                    </button>
+                    
+                    <button class="export-option" id="exportAllPngBtn">
+                        <span class="export-icon">📁</span>
+                        <span class="export-label">Download All Slides</span>
+                        <span class="export-format">ZIP (PNG)</span>
+                    </button>
+                </div>
+                
+                <div class="export-progress" id="exportProgress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">Exporting...</span>
+                </div>
+                
+                <button class="modal-close" id="closeExportModal">Close</button>
+            </div>
+        </div>
+
+        <!-- Preview All Modal -->
+        <div class="preview-all-modal" id="previewAllModal">
+            <div class="preview-all-content">
+                <div class="preview-all-header">
+                    <h3>Carousel Preview</h3>
+                    <button class="modal-close-btn" id="closePreviewAll">✕</button>
+                </div>
+                <div class="preview-all-grid" id="previewAllGrid">
+                    <!-- All slide previews will be rendered here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
