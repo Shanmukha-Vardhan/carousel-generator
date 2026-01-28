@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCarousel } from '../../context/CarouselContext';
-import { Plus, LayoutTemplate, Circle, Type } from 'lucide-react';
+import { Plus, LayoutTemplate, Circle, Type, GripVertical } from 'lucide-react';
 import clsx from 'clsx';
 
 const Sidebar = () => {
@@ -8,58 +8,74 @@ const Sidebar = () => {
 
     const getIcon = (type) => {
         switch (type) {
-            case 'cover': return <LayoutTemplate size={20} />;
-            case 'circle': return <Circle size={20} />;
-            case 'content': return <Type size={20} />;
-            default: return <LayoutTemplate size={20} />;
+            case 'cover': return <LayoutTemplate size={18} />;
+            case 'circle': return <Circle size={18} />;
+            case 'content': return <Type size={18} />;
+            default: return <LayoutTemplate size={18} />;
         }
     };
 
     return (
-        <aside className="w-64 bg-ui-surface border-r border-ui-border flex flex-col h-full">
-            <div className="p-4 border-b border-ui-border flex justify-between items-center">
-                <h3 className="text-xs font-bold text-ui-text-muted uppercase tracking-widest">Slides</h3>
-                <span className="text-xs bg-ui-bg px-2 py-1 rounded text-ui-text-muted font-mono">
-                    {slides.length}/{MAX_SLIDES}
-                </span>
+        <aside className="w-72 bg-ui-bg border-r border-ui-border flex flex-col h-full shrink-0 z-20">
+            <div className="h-16 flex items-center justify-between px-5 border-b border-ui-border bg-ui-bg/50 backdrop-blur-sm sticky top-0 z-10">
+                <div className="flex flex-col">
+                    <h3 className="text-xs font-bold text-ui-text uppercase tracking-widest">Outline</h3>
+                    <span className="text-[10px] text-ui-text-muted mt-0.5">
+                        {slides.length} / {MAX_SLIDES} Slides
+                    </span>
+                </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-3 flex flex-col gap-3">
+            <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 scrollbar-thin">
                 {slides.map((slide, index) => (
-                    <button
-                        key={slide.id}
-                        onClick={() => setActiveSlideIndex(index)}
-                        className={clsx(
-                            "group relative w-full aspect-square rounded-xl border-2 transition-all p-2 flex flex-col items-center justify-center gap-2",
-                            activeSlideIndex === index
-                                ? "bg-ui-surface-hover border-accent-primary shadow-[0_0_0_2px_rgba(107,92,231,0.2)]"
-                                : "bg-ui-bg border-transparent hover:border-ui-border"
-                        )}
-                    >
-                        <span className={clsx(
-                            "absolute top-2 left-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center",
-                            activeSlideIndex === index ? "bg-accent-primary text-white" : "bg-ui-border text-ui-text-muted"
-                        )}>
-                            {index + 1}
-                        </span>
-
-                        <div className={clsx("text-ui-text-muted group-hover:text-ui-text transition-colors", activeSlideIndex === index && "text-accent-primary")}>
-                            {getIcon(slide.type)}
+                    <div key={slide.id} className="group relative flex items-start gap-3">
+                        <div className="flex flex-col items-center pt-3 gap-1 min-w-[20px]">
+                            <span className={clsx(
+                                "text-[10px] font-mono font-medium transition-colors",
+                                activeSlideIndex === index ? "text-accent-primary" : "text-ui-text-muted group-hover:text-ui-text"
+                            )}>
+                                {String(index + 1).padStart(2, '0')}
+                            </span>
                         </div>
 
-                        <span className="text-[10px] uppercase font-bold text-ui-text-muted tracking-wider">
-                            {slide.type}
-                        </span>
-                    </button>
+                        <button
+                            onClick={() => setActiveSlideIndex(index)}
+                            className={clsx(
+                                "w-full aspect-square rounded-lg border-2 transition-all p-3 flex flex-col items-center justify-center gap-3 relative overflow-hidden text-left",
+                                activeSlideIndex === index
+                                    ? "bg-ui-surface border-accent-primary shadow-lg shadow-accent-primary/10"
+                                    : "bg-ui-surface/50 border-ui-border hover:border-ui-text-muted hover:bg-ui-surface"
+                            )}
+                        >
+                            {/* Slide Function Icon */}
+                            <div className={clsx(
+                                "p-2 rounded-md transition-colors",
+                                activeSlideIndex === index ? "bg-accent-primary/10 text-accent-primary" : "bg-ui-bg text-ui-text-muted group-hover:text-ui-text"
+                            )}>
+                                {getIcon(slide.type)}
+                            </div>
+
+                            <span className="text-[10px] uppercase font-bold text-ui-text-muted tracking-wider group-hover:text-ui-text transition-colors">
+                                {slide.type} Slide
+                            </span>
+
+                            {/* Active Indicator */}
+                            {activeSlideIndex === index && (
+                                <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent-primary" />
+                            )}
+                        </button>
+                    </div>
                 ))}
 
                 <button
-                    onClick={() => addSlide('cover')} // Default add type
+                    onClick={() => addSlide('cover')}
                     disabled={slides.length >= MAX_SLIDES}
-                    className="w-full aspect-square rounded-xl border-2 border-dashed border-ui-border flex flex-col items-center justify-center gap-2 text-ui-text-muted hover:text-accent-primary hover:border-accent-primary/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed group"
+                    className="flex flex-col items-center justify-center p-6 rounded-lg border-2 border-dashed border-ui-border text-ui-text-muted hover:text-accent-primary hover:border-accent-primary hover:bg-accent-primary/5 transition-all gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:border-ui-border disabled:hover:text-ui-text-muted mt-2"
                 >
-                    <Plus size={24} className="group-hover:scale-110 transition-transform" />
-                    <span className="text-xs font-medium">Add Slide</span>
+                    <div className="w-8 h-8 rounded-full bg-ui-surface flex items-center justify-center shadow-sm">
+                        <Plus size={16} />
+                    </div>
+                    <span className="text-xs font-medium">Add New Slide</span>
                 </button>
             </div>
         </aside>
